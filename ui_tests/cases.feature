@@ -65,9 +65,13 @@ Feature: Cases
         And the system should display the message 'Product successfully added to your shopping cart'
         And the selected item should be successfully added to cart
 
-    Scenario:
+    Scenario: Add new address
         Given that the 'http://automationpractice.com/' site is availble
         And I have signed in
-        And
+        When I access my addresses
+        And add a new address with the following information:
+            | First name | Last name | Address     | City   | State         | Zip/Postal Code | Country       | Mobile phone | Please assign an address title for future reference. |
+            | Joao       | Test      | 123 Fun St. | Boston | Massachusetts | 01234           | United States | 0123456789   | Work                                                 |
+    Then the new address should be successfully added to the my addresses page
 
     Scenario: Purchase an item
