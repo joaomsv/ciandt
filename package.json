@@ -3,6 +3,9 @@
     "cypress": "^4.12.0",
     "cypress-cucumber-preprocessor": "^2.5.4"
   },
+  "cypress-cucumber-preprocessor": {
+      "nonGlobalStepDefinitions": true
+  },
   "name": "challenges",
   "version": "1.0.0",
   "main": "index.js",
