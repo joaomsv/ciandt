@@ -44,13 +44,13 @@ Feature: Cases
             | Customer service | joaomarcossv@gmail.com | 123            | Test    |
         Then the system should display the message 'Your message has been successfully sent to our team.'
 
-# Scenario: Add item to wishlist
-#     Given that the 'http://automationpractice.com/' site is availble
-#     And I have signed in
-#     When I search for a blouse
-#     And add the first item to my wishlist
-#     Then the system should display the message 'Added to your wishlist.'
-#     And the item should be successfully added to my wishlist
+    Scenario: Add item to wishlist
+        And I have signed in
+            | Email                  | Password |
+            | joaomarcossv@gmail.com | 12345    |
+        When I search for a 'blouse'
+        And add the first item to my wishlist
+        Then the system should display an alert with the message 'Added to your wishlist.'
 
 # Scenario: Compare 2 items
 #     Given that the 'http://automationpractice.com/' site is availble

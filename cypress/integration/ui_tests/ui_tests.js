@@ -73,3 +73,16 @@ When('fill in the following information:', (datatable) => {
     cy.get('#submitMessage').click()
   })
 })
+
+When('I search for a {string}', (item) => {
+  cy.get('#search_query_top').type(item)
+  cy.get('#searchbox').find('.btn').click()
+})
+
+When('add the first item to my wishlist', () => {
+  cy.get('.ajax_block_product').eq('0').find('.wishlist').click()
+})
+
+Then('the system should display an alert with the message {string}', (msg) => {
+    cy.get('.fancybox-error').should('contain',msg)
+})
