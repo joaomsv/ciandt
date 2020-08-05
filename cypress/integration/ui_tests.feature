@@ -37,13 +37,12 @@ Feature: Cases
         And change my password from '12345' to '12345'
         Then the system should display the message 'Your personal information has been successfully updated.'
 
-# Scenario: Contact customer service
-#     Given that the 'http://automationpractice.com/' site is availble
-#     When I access the Contact Us page
-#     And fill in the following information:
-#         | Subject Heading  | Email address          | Order reference | Message |
-#         | Customer service | joaomarcossv@gmail.com | 123             | Test    |
-#     Then the system should display the message 'Your message has been successfully sent to our team.'
+    Scenario: Contact customer service
+        When I access the Contact Us page
+        And fill in the following information:
+            | subjectHeading   | Email                  | orderReference | Message |
+            | Customer service | joaomarcossv@gmail.com | 123            | Test    |
+        Then the system should display the message 'Your message has been successfully sent to our team.'
 
 # Scenario: Add item to wishlist
 #     Given that the 'http://automationpractice.com/' site is availble

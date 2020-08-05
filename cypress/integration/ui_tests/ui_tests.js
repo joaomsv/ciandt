@@ -57,5 +57,19 @@ When('change my password from {string} to {string}', (oldPsw, newPsw) => {
 })
 
 Then('the system should display the message {string}', (msg) => {
-  cy.get('.alert').should('contain',msg)
+  cy.get('.alert').should('contain', msg)
+})
+
+When('I access the Contact Us page', () => {
+  cy.get('#contact-link').click()
+})
+
+When('fill in the following information:', (datatable) => {
+  datatable.hashes().forEach((row) => {
+    cy.get('#id_contact').select(row.subjectHeading)
+    cy.get('#email').type(row.Email)
+    cy.get('#id_order').type(row.orderReference)
+    cy.get('#message').type(row.Message)
+    cy.get('#submitMessage').click()
+  })
 })
