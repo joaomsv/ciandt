@@ -52,11 +52,10 @@ Feature: Cases
         And add the first item to my wishlist
         Then the system should display an alert with the message 'Added to your wishlist.'
 
-# Scenario: Compare 2 items
-#     Given that the 'http://automationpractice.com/' site is availble
-#     When I search for a dress
-#     And choose 2 itens to compare
-#     Then the 2 chosen items should be displayed in the product comparison page
+    Scenario: Compare 2 items
+        When I search for a 'dress'
+        And choose 2 itens to compare
+        Then the 2 chosen items should be displayed in the product comparison page
 
 # Scenario: Add item to cart
 #     Given that the 'http://automationpractice.com/' site is availble

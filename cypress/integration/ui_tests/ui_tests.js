@@ -1,6 +1,10 @@
 /// <reference types="cypress" />
 
-import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps'
+import { Given, When, Then, Before } from 'cypress-cucumber-preprocessor/steps'
+
+Before(() => {
+  cy.server()
+})
 
 Given('I visit {string} site', (site) => {
   cy.visit(site)
@@ -84,5 +88,21 @@ When('add the first item to my wishlist', () => {
 })
 
 Then('the system should display an alert with the message {string}', (msg) => {
-    cy.get('.fancybox-error').should('contain',msg)
+  cy.get('.fancybox-error').should('contain', msg)
+})
+
+When('choose 2 itens to compare', () => {
+  cy.route('GET', '/*').as('addWait')
+  cy.get('.ajax_block_product').each(($el, index, $list) => {
+    if(index < 2)
+    {
+      cy.get('.ajax_block_product').eq(index).find('.compare').click()
+      cy.wait('@addWait')
+    }
+  })
+})
+
+Then('the 2 chosen items should be displayed in the product comparison page', () => {
+  cy.get('.compare-form').eq('0').click()
+  cy.get('.ajax_block_product').should('have.length', 2)
 })
