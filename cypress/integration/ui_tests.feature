@@ -74,4 +74,14 @@ Feature: Cases
             | Joao      | Test     | 123 Fun St. | Boston | Massachusetts | 01234      | 0123456789  | Work         |
         Then the new address should be successfully added to the my addresses page
 
-# Scenario: Purchase an item
+    Scenario: Purchase an item
+        And I have signed in
+            | Email                  | Password |
+            | joaomarcossv@gmail.com | 12345    |
+        When I search for a 'dress'
+        And add item to cart
+        Then a modal should appear with the item's information
+        And the modal should display the message 'Product successfully added to your shopping cart'
+        When I proceed to checkout
+        And finalize the purchase
+        Then the purchase should be successfully completed
