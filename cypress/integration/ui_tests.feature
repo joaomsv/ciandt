@@ -63,12 +63,15 @@ Feature: Cases
         Then a modal should appear with the item's information
         And the modal should display the message 'Product successfully added to your shopping cart'
 
-# Scenario: Add new address
-#     Given that the 'http://automationpractice.com/' site is availble
-#     And I have signed in
-#     When I access my addresses
-#     And add a new address with the following information:
-#         | First name | Last name | Address     | City   | State         | Zip/Postal Code | Country       | Mobile phone | Please assign an address title for future reference. |
-#         | Joao       | Test      | 123 Fun St. | Boston | Massachusetts | 01234           | United States | 0123456789   | Work                                                 |
-#     Then the new address should be successfully added to the my addresses page
+    Scenario: Add new address
+        And I have signed in
+            | Email                  | Password |
+            | joaomarcossv@gmail.com | 12345    |
+        And no Work address exists
+        When I access my addresses
+        And add a new address with the following information:
+            | firstName | lastName | Address     | City   | State         | postalCode | mobilePhone | addressTitle |
+            | Joao      | Test     | 123 Fun St. | Boston | Massachusetts | 01234      | 0123456789  | Work         |
+        Then the new address should be successfully added to the my addresses page
+
 # Scenario: Purchase an item

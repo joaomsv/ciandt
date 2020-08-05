@@ -109,9 +109,48 @@ Then('the 2 chosen items should be displayed in the product comparison page', ()
 When('add item to cart', () => {
   cy.get('.ajax_block_product').eq('0').find('[title="Add to cart"]').click()
 })
+
 Then("a modal should appear with the item's information", () => {
   cy.get('#layer_cart').should('be.visible')
 })
+
 Then('the modal should display the message {string}', (msg) => {
   cy.get('#layer_cart').find('.layer_cart_product h2').should('contain', msg)
+})
+
+Given('no Work address exists', () => {
+  cy.get('.icon-building').click()
+  cy.get('.col-xs-12.col-sm-6.address').each(($el, index, $list) => {
+    if ($el.find('.page-subheading').text() == 'Work') {
+      cy.get('.col-xs-12.col-sm-6.address').eq(index).find('[title="Delete"]').click()
+    }
+  })
+})
+
+When('I access my addresses', () => {
+  cy.get('.account').click()
+  cy.get('.icon-building').click()
+})
+
+When('add a new address with the following information:', (datatable) => {
+  cy.get('[title="Add an address"]').click()
+  datatable.hashes().forEach((row) => {
+    cy.get('#firstname').clear().type(row.firstName)
+    cy.get('#lastname').clear().type(row.lastName)
+    cy.get('#address1').type(row.Address)
+    cy.get('#city').type(row.City)
+    cy.get('#id_state').select(row.State)
+    cy.get('#postcode').type(row.postalCode)
+    cy.get('#phone_mobile').type(row.mobilePhone)
+    cy.get('#alias').clear().type(row.addressTitle)
+    cy.get('#submitAddress').click()
+  })
+})
+
+Then('the new address should be successfully added to the my addresses page', () => {
+  cy.get('.col-xs-12.col-sm-6.address').each(($el, index, $list) => {
+    if ($el.find('.page-subheading').text() == 'Work') {
+      cy.get('.col-xs-12.col-sm-6.address').eq(index).find('.page-subheading').should('contain','Work')
+    }
+  })
 })
