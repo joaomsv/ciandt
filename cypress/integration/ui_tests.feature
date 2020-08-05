@@ -2,6 +2,8 @@ Feature: Cases
 
     10 Cases for the ciandt challenge.
     site: http://automationpractice.com/
+    Background: 
+        Given I visit 'http://automationpractice.com/' site
 
     # Scenario: Create User
     #     Given I visit 'http://automationpractice.com/' site
@@ -13,7 +15,6 @@ Feature: Cases
     #     And be redirected to the My Account screen
 
     Scenario: Sign in
-        Given I visit 'http://automationpractice.com/' site
         And no user has signed in
         When request to sign in with the following information:
             | Email                  | Password |
@@ -22,7 +23,6 @@ Feature: Cases
         And be redirected to the My Account screen
 
     Scenario: Sign out
-        Given I visit 'http://automationpractice.com/' site
         And I have signed in
             | Email                  | Password |
             | joaomarcossv@gmail.com | 12345    |
