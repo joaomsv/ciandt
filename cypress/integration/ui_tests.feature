@@ -2,7 +2,7 @@ Feature: Cases
 
     10 Cases for the ciandt challenge.
     site: http://automationpractice.com/
-    Background: 
+    Background:
         Given I visit 'http://automationpractice.com/' site
 
     # Scenario: Create User
@@ -29,12 +29,13 @@ Feature: Cases
         When request to sign out
         Then the user should be successfully signed out
 
-# Scenario: Change my password
-#     Given that the 'http://automationpractice.com/' site is availble
-#     When I have signed in
-#     And access my personal information
-#     And change my password
-#     Then the system should display the message 'Your personal information has been successfully updated.'
+    Scenario: Change my password
+        And I have signed in
+            | Email                  | Password |
+            | joaomarcossv@gmail.com | 12345    |
+        When I access my personal information
+        And change my password from '12345' to '12345'
+        Then the system should display the message 'Your personal information has been successfully updated.'
 
 # Scenario: Contact customer service
 #     Given that the 'http://automationpractice.com/' site is availble

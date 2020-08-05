@@ -37,9 +37,25 @@ Given('I have signed in', (datatable) => {
 })
 
 When('request to sign out', () => {
-    cy.get('.logout').click()
+  cy.get('.logout').click()
 })
 
 Then('the user should be successfully signed out', () => {
-    expect(Cypress.$('.login')).to.exist
+  expect(Cypress.$('.login')).to.exist
+})
+
+When('I access my personal information', () => {
+  cy.get('.account').click()
+  cy.get('.icon-user').click()
+})
+
+When('change my password from {string} to {string}', (oldPsw, newPsw) => {
+  cy.get('#old_passwd').type(oldPsw)
+  cy.get('#passwd').type(newPsw)
+  cy.get('#confirmation').type(newPsw)
+  cy.get('[name=submitIdentity]').click()
+})
+
+Then('the system should display the message {string}', (msg) => {
+  cy.get('.alert').should('contain',msg)
 })
