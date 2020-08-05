@@ -94,8 +94,7 @@ Then('the system should display an alert with the message {string}', (msg) => {
 When('choose 2 itens to compare', () => {
   cy.route('GET', '/*').as('addWait')
   cy.get('.ajax_block_product').each(($el, index, $list) => {
-    if(index < 2)
-    {
+    if (index < 2) {
       cy.get('.ajax_block_product').eq(index).find('.compare').click()
       cy.wait('@addWait')
     }
@@ -105,4 +104,14 @@ When('choose 2 itens to compare', () => {
 Then('the 2 chosen items should be displayed in the product comparison page', () => {
   cy.get('.compare-form').eq('0').click()
   cy.get('.ajax_block_product').should('have.length', 2)
+})
+
+When('add item to cart', () => {
+  cy.get('.ajax_block_product').eq('0').find('[title="Add to cart"]').click()
+})
+Then("a modal should appear with the item's information", () => {
+  cy.get('#layer_cart').should('be.visible')
+})
+Then('the modal should display the message {string}', (msg) => {
+  cy.get('#layer_cart').find('.layer_cart_product h2').should('contain', msg)
 })

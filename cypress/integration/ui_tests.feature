@@ -57,13 +57,11 @@ Feature: Cases
         And choose 2 itens to compare
         Then the 2 chosen items should be displayed in the product comparison page
 
-# Scenario: Add item to cart
-#     Given that the 'http://automationpractice.com/' site is availble
-#     When search for an item
-#     And add item to cart
-#     Then a modal should appear with the item's information
-#     And the system should display the message 'Product successfully added to your shopping cart'
-#     And the selected item should be successfully added to cart
+    Scenario: Add item to cart
+        When I search for a 'dress'
+        And add item to cart
+        Then a modal should appear with the item's information
+        And the modal should display the message 'Product successfully added to your shopping cart'
 
 # Scenario: Add new address
 #     Given that the 'http://automationpractice.com/' site is availble
