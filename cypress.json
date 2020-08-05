@@ -1,4 +1,3 @@
 {
-    "testFiles": "**/*.feature",
-    "baseUrl": "http://automationpractice.com/"
+    "testFiles": "**/*.feature"
 }
