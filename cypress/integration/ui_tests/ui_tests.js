@@ -150,7 +150,24 @@ When('add a new address with the following information:', (datatable) => {
 Then('the new address should be successfully added to the my addresses page', () => {
   cy.get('.col-xs-12.col-sm-6.address').each(($el, index, $list) => {
     if ($el.find('.page-subheading').text() == 'Work') {
-      cy.get('.col-xs-12.col-sm-6.address').eq(index).find('.page-subheading').should('contain','Work')
+      cy.get('.col-xs-12.col-sm-6.address').eq(index).find('.page-subheading').should('contain', 'Work')
     }
   })
+})
+
+When('I proceed to checkout', () => {
+  cy.get('[title="Proceed to checkout"]').click()
+})
+
+When('finalize the purchase', () => {
+  cy.get('[title="Proceed to checkout"]:visible').click()
+  cy.get('[name="processAddress"]').click()
+  cy.get('#cgv').check()
+  cy.get('[name="processCarrier"]').click()
+  cy.get('.bankwire').click()
+  cy.get('.button.btn.btn-default.button-medium:visible').click()
+})
+
+Then('the purchase should be successfully completed', () => {
+  cy.get('.cheque-indent').should('contain','Your order on My Store is complete.')
 })
