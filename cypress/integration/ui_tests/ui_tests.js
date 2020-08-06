@@ -169,5 +169,5 @@ When('finalize the purchase', () => {
 })
 
 Then('the purchase should be successfully completed', () => {
-  cy.get('.cheque-indent').should('contain','Your order on My Store is complete.')
+  cy.get('.cheque-indent').should('contain', 'Your order on My Store is complete.')
 })
