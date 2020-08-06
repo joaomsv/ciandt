@@ -1,4 +1,4 @@
-Feature: Cases
+Feature: UI Tests
 
     10 Cases for the ciandt challenge.
     site: http://automationpractice.com/

@@ -1,6 +1,5 @@
 {
     "env": {
         "TAGS": "not @ignore"
-    },
-    "testFiles": "**/*.feature"
+    }
 }
