@@ -5,14 +5,16 @@ Feature: Cases
     Background:
         Given I visit 'http://automationpractice.com/' site
 
-    # Scenario: Create User
-    #     Given I visit 'http://automationpractice.com/' site
-    #     And no user has signed in
-    #     When I create a new account with the following information:
-    #         | Email              | Title | First name | Last name | Password | Date of Birth    | Address      | City   | State         | Zip/Postal Code | Country       | Mobile phone | Assign an address alias for future reference |
-    #         | test1@joaotest.com | Mr.   | Joao       | Vieira    | 12345    | February-04-1993 | Av. Test 123 | Revere | Massachusetts | 02151           | United States | 31999328099  | Home                                         |
-    #     Then the new user should be successfully created
-    #     And be redirected to the My Account screen
+    @ignore
+    Scenario: Create User
+        Given I visit 'http://automationpractice.com/' site
+        And no user has signed in
+        When I create a new account with the following information:
+            | Email              | Title | First name | Last name | Password | Date of Birth    | Address      | City   | State         | Zip/Postal Code | Country       | Mobile phone | Assign an address alias for future reference |
+            | test1@joaotest.com | Mr.   | Joao       | Vieira    | 12345    | February-04-1993 | Av. Test 123 | Revere | Massachusetts | 02151           | United States | 31999328099  | Home                                         |
+        Then the new user should be successfully created
+        And be redirected to the My Account screen
+
 
     Scenario: Sign in
         And no user has signed in
