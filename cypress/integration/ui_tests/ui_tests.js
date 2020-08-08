@@ -5,11 +5,13 @@ import AuthenticationPage from '../../pageObjects/AuthenticationPage'
 import Navbar from '../../pageObjects/Navbar'
 import MyAccountPage from '../../pageObjects/MyAccountPage'
 import YourPersonalInfoPage from '../../pageObjects/YourPersonalInfoPage'
+import ContactUsPage from '../../pageObjects/ContactUsPage'
 
 const authenticationPage = new AuthenticationPage()
 const navbar = new Navbar()
 const myAccountPage = new MyAccountPage()
 const yourPersonalInfoPage = new YourPersonalInfoPage()
+const contactUsPage = new ContactUsPage()
 
 Before(() => {
   cy.server()
@@ -67,16 +69,12 @@ Then('the system should display the message {string}', (msg) => {
 })
 
 When('I access the Contact Us page', () => {
-  cy.get('#contact-link').click()
+  navbar.getContactUsBtn().click()
 })
 
 When('fill in the following information:', (datatable) => {
   datatable.hashes().forEach((row) => {
-    cy.get('#id_contact').select(row.subjectHeading)
-    cy.get('#email').type(row.Email)
-    cy.get('#id_order').type(row.orderReference)
-    cy.get('#message').type(row.Message)
-    cy.get('#submitMessage').click()
+    contactUsPage.SendMessage(row.subjectHeading,row.Email,row.orderReference,row.Message)
   })
 })
 

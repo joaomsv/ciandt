@@ -10,6 +10,10 @@ class Navbar {
   getAccountBtn(){
       return cy.get('.account')
   }
+
+  getContactUsBtn(){
+      return cy.get('#contact-link')
+  }
 }
 
 export default Navbar
