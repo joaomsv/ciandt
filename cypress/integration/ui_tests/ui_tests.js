@@ -6,12 +6,14 @@ import Navbar from '../../pageObjects/Navbar'
 import MyAccountPage from '../../pageObjects/MyAccountPage'
 import YourPersonalInfoPage from '../../pageObjects/YourPersonalInfoPage'
 import ContactUsPage from '../../pageObjects/ContactUsPage'
+import SearchResultsPage from '../../pageObjects/SearchResultsPage'
 
 const authenticationPage = new AuthenticationPage()
 const navbar = new Navbar()
 const myAccountPage = new MyAccountPage()
 const yourPersonalInfoPage = new YourPersonalInfoPage()
 const contactUsPage = new ContactUsPage()
+const searchResultsPage = new SearchResultsPage()
 
 Before(() => {
   cy.server()
@@ -61,7 +63,7 @@ When('I access my personal information', () => {
 })
 
 When('change my password from {string} to {string}', (oldPsw, newPsw) => {
-  yourPersonalInfoPage.ChangePassword(oldPsw,newPsw)
+  yourPersonalInfoPage.ChangePassword(oldPsw, newPsw)
 })
 
 Then('the system should display the message {string}', (msg) => {
@@ -74,28 +76,27 @@ When('I access the Contact Us page', () => {
 
 When('fill in the following information:', (datatable) => {
   datatable.hashes().forEach((row) => {
-    contactUsPage.SendMessage(row.subjectHeading,row.Email,row.orderReference,row.Message)
+    contactUsPage.SendMessage(row.subjectHeading, row.Email, row.orderReference, row.Message)
   })
 })
 
 When('I search for a {string}', (item) => {
-  cy.get('#search_query_top').type(item)
-  cy.get('#searchbox').find('.btn').click()
+  navbar.SearchForItem(item)
 })
 
 When('add the first item to my wishlist', () => {
-  cy.get('.ajax_block_product').eq('0').find('.wishlist').click()
+  searchResultsPage.getResultsBlock().first().find('.wishlist').click()
 })
 
 Then('the system should display an alert with the message {string}', (msg) => {
-  cy.get('.fancybox-error').should('contain', msg)
+  searchResultsPage.getAlert().should('contain', msg)
 })
 
 When('choose 2 itens to compare', () => {
   cy.route('GET', '/*').as('addWait')
-  cy.get('.ajax_block_product').each(($el, index, $list) => {
+  searchResultsPage.getResultsBlock().each(($el, index, $list) => {
     if (index < 2) {
-      cy.get('.ajax_block_product').eq(index).find('.compare').click()
+      searchResultsPage.getResultsBlock().eq(index).find('.compare').click()
       cy.wait('@addWait')
     }
   })
@@ -103,11 +104,11 @@ When('choose 2 itens to compare', () => {
 
 Then('the 2 chosen items should be displayed in the product comparison page', () => {
   cy.get('.compare-form').eq('0').click()
-  cy.get('.ajax_block_product').should('have.length', 2)
+  searchResultsPage.getResultsBlock().should('have.length', 2)
 })
 
 When('add item to cart', () => {
-  cy.get('.ajax_block_product').eq('0').find('[title="Add to cart"]').click()
+  searchResultsPage.getResultsBlock().first().find('[title="Add to cart"]').click()
 })
 
 Then("a modal should appear with the item's information", () => {
