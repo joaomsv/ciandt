@@ -15,6 +15,10 @@ class SearchResultsPage {
     return cy.get('#layer_cart')
   }
 
+  getCheckoutModalBtn() {
+    return cy.get('[title="Proceed to checkout"]')
+  }
+
   getCartModalHeader() {
     return cy.get('#layer_cart').find('.layer_cart_product h2')
   }

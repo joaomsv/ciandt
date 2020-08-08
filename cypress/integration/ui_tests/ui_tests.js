@@ -8,6 +8,7 @@ import YourPersonalInfoPage from '../../pageObjects/YourPersonalInfoPage'
 import ContactUsPage from '../../pageObjects/ContactUsPage'
 import SearchResultsPage from '../../pageObjects/SearchResultsPage'
 import MyAddressesPage from '../../pageObjects/MyAddressesPage'
+import CartPage from '../../pageObjects/CartPage'
 
 const authenticationPage = new AuthenticationPage()
 const navbar = new Navbar()
@@ -16,6 +17,7 @@ const yourPersonalInfoPage = new YourPersonalInfoPage()
 const contactUsPage = new ContactUsPage()
 const searchResultsPage = new SearchResultsPage()
 const myAddressesPage = new MyAddressesPage()
+const cartPage = new CartPage()
 
 Before(() => {
   cy.server()
@@ -160,18 +162,13 @@ Then('the new address should be successfully added to the my addresses page', ()
 })
 
 When('I proceed to checkout', () => {
-  cy.get('[title="Proceed to checkout"]').click()
+  searchResultsPage.getCheckoutModalBtn().click()
 })
 
 When('finalize the purchase', () => {
-  cy.get('[title="Proceed to checkout"]:visible').click()
-  cy.get('[name="processAddress"]').click()
-  cy.get('#cgv').check()
-  cy.get('[name="processCarrier"]').click()
-  cy.get('.bankwire').click()
-  cy.get('.button.btn.btn-default.button-medium:visible').click()
+  cartPage.FinalizePurchase()
 })
 
 Then('the purchase should be successfully completed', () => {
-  cy.get('.cheque-indent').should('contain', 'Your order on My Store is complete.')
+  cartPage.getOrderMsgHeader().should('contain', 'Your order on My Store is complete.')
 })
