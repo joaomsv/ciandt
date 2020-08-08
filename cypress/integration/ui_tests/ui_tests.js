@@ -2,6 +2,10 @@
 
 import { Given, When, Then, Before } from 'cypress-cucumber-preprocessor/steps'
 import AuthenticationPage from '../../pageObjects/AuthenticationPage'
+import Navbar from '../../pageObjects/Navbar'
+
+const authenticationPage = new AuthenticationPage()
+const navbar = new Navbar()
 
 Before(() => {
   cy.server()
@@ -12,12 +16,11 @@ Given('I visit {string} site', (site) => {
 })
 
 Given('no user has signed in', () => {
-  cy.get('.login').should('exist')
+  navbar.getLoginBtn().should('exist')
 })
 
 When('request to sign in with the following information:', (datatable) => {
-  const authenticationPage = new AuthenticationPage()
-  cy.get('.login').click()
+  navbar.getLoginBtn().click()
   datatable.hashes().forEach((row) => {
     authenticationPage.Login(row.Email, row.Password)
   })
@@ -32,11 +35,9 @@ Then('be redirected to the My Account screen', () => {
 })
 
 Given('I have signed in', (datatable) => {
-  cy.get('.login').click()
+  navbar.getLoginBtn().click()
   datatable.hashes().forEach((row) => {
-    cy.get('#email').type(row.Email)
-    cy.get('#passwd').type(row.Password)
-    cy.get('#SubmitLogin').click()
+    authenticationPage.Login(row.Email, row.Password)
   })
 })
 
