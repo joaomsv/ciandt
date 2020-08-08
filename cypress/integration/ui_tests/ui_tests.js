@@ -4,10 +4,12 @@ import { Given, When, Then, Before } from 'cypress-cucumber-preprocessor/steps'
 import AuthenticationPage from '../../pageObjects/AuthenticationPage'
 import Navbar from '../../pageObjects/Navbar'
 import MyAccountPage from '../../pageObjects/MyAccountPage'
+import YourPersonalInfoPage from '../../pageObjects/YourPersonalInfoPage'
 
 const authenticationPage = new AuthenticationPage()
 const navbar = new Navbar()
 const myAccountPage = new MyAccountPage()
+const yourPersonalInfoPage = new YourPersonalInfoPage()
 
 Before(() => {
   cy.server()
@@ -53,18 +55,15 @@ Then('the user should be successfully signed out', () => {
 
 When('I access my personal information', () => {
   navbar.getAccountBtn().click()
-  cy.get('.icon-user').click()
+  myAccountPage.getMyPersonalInfoBtn().click()
 })
 
 When('change my password from {string} to {string}', (oldPsw, newPsw) => {
-  cy.get('#old_passwd').type(oldPsw)
-  cy.get('#passwd').type(newPsw)
-  cy.get('#confirmation').type(newPsw)
-  cy.get('[name=submitIdentity]').click()
+  yourPersonalInfoPage.ChangePassword(oldPsw,newPsw)
 })
 
 Then('the system should display the message {string}', (msg) => {
-  cy.get('.alert').should('contain', msg)
+  yourPersonalInfoPage.getAlert().should('contain', msg)
 })
 
 When('I access the Contact Us page', () => {
