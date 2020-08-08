@@ -103,7 +103,7 @@ When('choose 2 itens to compare', () => {
 })
 
 Then('the 2 chosen items should be displayed in the product comparison page', () => {
-  cy.get('.compare-form').eq('0').click()
+  searchResultsPage.getCompareBtn().first().click()
   searchResultsPage.getResultsBlock().should('have.length', 2)
 })
 
@@ -112,11 +112,11 @@ When('add item to cart', () => {
 })
 
 Then("a modal should appear with the item's information", () => {
-  cy.get('#layer_cart').should('be.visible')
+  searchResultsPage.getCartModal().should('be.visible')
 })
 
 Then('the modal should display the message {string}', (msg) => {
-  cy.get('#layer_cart').find('.layer_cart_product h2').should('contain', msg)
+  searchResultsPage.getCartModalHeader().should('contain', msg)
 })
 
 Given('no Work address exists', () => {
