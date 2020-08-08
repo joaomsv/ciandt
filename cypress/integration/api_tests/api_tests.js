@@ -16,19 +16,15 @@ Then('all users should have a name, username, and email', () => {
   })
 })
 
-Then('their Email must be valid', () => {
-  function validateEmail(email) {
-    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    return re.test(email)
-  }
+Then('their Email should be valid', () => {
   cy.get('@api').then((response) => {
     response.body.forEach((element) => {
-      expect(validateEmail(element.email)).to.be.true
+      cy.validateEmail(element.email).should('be.true')
     })
   })
 })
 
-Then('their Company catchphrase must have less than 50 characters', () => {
+Then('their Company catchphrase should have less than 50 characters', () => {
   cy.get('@api').then((response) => {
     response.body.forEach((element) => {
       expect(element.company.catchPhrase).to.be.length.of.below(50)

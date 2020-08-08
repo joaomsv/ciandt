@@ -6,8 +6,8 @@ Feature: API Tests
     Scenario: Get users
         When I request a 'GET' from the host 'https://jsonplaceholder.typicode.com/users' with the body ''
         Then all users should have a name, username, and email
-        And their Email must be valid
-        And their Company catchphrase must have less than 50 characters
+        And their Email should be valid
+        And their Company catchphrase should have less than 50 characters
 
     Scenario: Post posts with user id from get
         When I request a POST with GET user id
