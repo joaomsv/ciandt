@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 
 import { Given, When, Then, Before } from 'cypress-cucumber-preprocessor/steps'
+import AuthenticationPage from '../../pageObjects/AuthenticationPage'
 
 Before(() => {
   cy.server()
@@ -15,11 +16,10 @@ Given('no user has signed in', () => {
 })
 
 When('request to sign in with the following information:', (datatable) => {
+  const authenticationPage = new AuthenticationPage()
   cy.get('.login').click()
   datatable.hashes().forEach((row) => {
-    cy.get('#email').type(row.Email)
-    cy.get('#passwd').type(row.Password)
-    cy.get('#SubmitLogin').click()
+    authenticationPage.Login(row.Email, row.Password)
   })
 })
 
