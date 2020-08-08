@@ -3,9 +3,11 @@
 import { Given, When, Then, Before } from 'cypress-cucumber-preprocessor/steps'
 import AuthenticationPage from '../../pageObjects/AuthenticationPage'
 import Navbar from '../../pageObjects/Navbar'
+import MyAccountPage from '../../pageObjects/MyAccountPage'
 
 const authenticationPage = new AuthenticationPage()
 const navbar = new Navbar()
+const myAccountPage = new MyAccountPage()
 
 Before(() => {
   cy.server()
@@ -27,11 +29,11 @@ When('request to sign in with the following information:', (datatable) => {
 })
 
 Then('the user should be successfully signed in', () => {
-  expect(Cypress.$('.account')).to.contain('Joao Vieira')
+  navbar.getAccountBtn().should('contain', 'Joao Vieira')
 })
 
 Then('be redirected to the My Account screen', () => {
-  cy.get('.page-heading').should('contain', 'My account')
+  myAccountPage.getPageHeader().should('contain', 'My account')
 })
 
 Given('I have signed in', (datatable) => {
@@ -42,15 +44,15 @@ Given('I have signed in', (datatable) => {
 })
 
 When('request to sign out', () => {
-  cy.get('.logout').click()
+  navbar.getLogoutBtn().click()
 })
 
 Then('the user should be successfully signed out', () => {
-  expect(Cypress.$('.login')).to.exist
+  navbar.getLogoutBtn().should('not.exist')
 })
 
 When('I access my personal information', () => {
-  cy.get('.account').click()
+  navbar.getAccountBtn().click()
   cy.get('.icon-user').click()
 })
 
