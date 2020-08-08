@@ -6,6 +6,10 @@ class MyAccountPage {
   getMyPersonalInfoBtn() {
     return cy.get('.icon-user')
   }
+
+  getMyAddressesBtn() {
+    return cy.get('.icon-building')
+  }
 }
 
 export default MyAccountPage

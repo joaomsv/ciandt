@@ -7,6 +7,7 @@ import MyAccountPage from '../../pageObjects/MyAccountPage'
 import YourPersonalInfoPage from '../../pageObjects/YourPersonalInfoPage'
 import ContactUsPage from '../../pageObjects/ContactUsPage'
 import SearchResultsPage from '../../pageObjects/SearchResultsPage'
+import MyAddressesPage from '../../pageObjects/MyAddressesPage'
 
 const authenticationPage = new AuthenticationPage()
 const navbar = new Navbar()
@@ -14,6 +15,7 @@ const myAccountPage = new MyAccountPage()
 const yourPersonalInfoPage = new YourPersonalInfoPage()
 const contactUsPage = new ContactUsPage()
 const searchResultsPage = new SearchResultsPage()
+const myAddressesPage = new MyAddressesPage()
 
 Before(() => {
   cy.server()
@@ -120,38 +122,39 @@ Then('the modal should display the message {string}', (msg) => {
 })
 
 Given('no Work address exists', () => {
-  cy.get('.icon-building').click()
-  cy.get('.col-xs-12.col-sm-6.address').each(($el, index, $list) => {
+  myAccountPage.getMyAddressesBtn().click()
+  myAddressesPage.getAddressBlock().each(($el, index, $list) => {
     if ($el.find('.page-subheading').text() == 'Work') {
-      cy.get('.col-xs-12.col-sm-6.address').eq(index).find('[title="Delete"]').click()
+      myAddressesPage.getAddressBlock().eq(index).find('[title="Delete"]').click()
     }
   })
 })
 
 When('I access my addresses', () => {
-  cy.get('.account').click()
-  cy.get('.icon-building').click()
+  navbar.getAccountBtn().click()
+  myAccountPage.getMyAddressesBtn().click()
 })
 
 When('add a new address with the following information:', (datatable) => {
-  cy.get('[title="Add an address"]').click()
+  myAddressesPage.getAddAddressBtn().click()
   datatable.hashes().forEach((row) => {
-    cy.get('#firstname').clear().type(row.firstName)
-    cy.get('#lastname').clear().type(row.lastName)
-    cy.get('#address1').type(row.Address)
-    cy.get('#city').type(row.City)
-    cy.get('#id_state').select(row.State)
-    cy.get('#postcode').type(row.postalCode)
-    cy.get('#phone_mobile').type(row.mobilePhone)
-    cy.get('#alias').clear().type(row.addressTitle)
-    cy.get('#submitAddress').click()
+    myAddressesPage.SaveAddress(
+      row.firstName,
+      row.lastName,
+      row.Address,
+      row.City,
+      row.State,
+      row.postalCode,
+      row.mobilePhone,
+      row.addressTitle
+    )
   })
 })
 
 Then('the new address should be successfully added to the my addresses page', () => {
-  cy.get('.col-xs-12.col-sm-6.address').each(($el, index, $list) => {
+  myAddressesPage.getAddressBlock().each(($el, index, $list) => {
     if ($el.find('.page-subheading').text() == 'Work') {
-      cy.get('.col-xs-12.col-sm-6.address').eq(index).find('.page-subheading').should('contain', 'Work')
+      myAddressesPage.getAddressBlock().eq(index).find('.page-subheading').should('contain', 'Work')
     }
   })
 })
